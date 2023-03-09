@@ -1,0 +1,52 @@
+<dashboard>
+  <init>
+    <set token="RefreshInterval">180s</set>
+    <set token="TargetIndex">"it-cyberark"</set>
+    <set token="TargetSource">"cyberark:epv:cef"</set>
+    <set token="PSMHosts">("FQDN","FQDN")</set>
+    <set token="CPMHosts">("FQDN","FQDN")</set>
+    <set token="PVWAHosts">("FQDN","FQDN")</set>
+    <set token="PTAHosts">("FQDN","FQDN")</set>
+    <set token="VaultHosts">("FQDN","FQDN")</set>
+    <set token="ComponentHosts">("FQDN","FQDN")</set>
+    <set token="AllHosts">("FQDN","FQDN")</set>
+  </init>
+  <label>Dev CyberArk Host Overview</label>
+  <description>Dev CyberArk Host Overview</description>
+  <row>
+    <panel>
+      <title>Vault System Information</title>
+      <table>
+        <search>
+          <query>
+            index=$TargetIndex$ host IN $AllHosts$ Product="HostMonitor"
+            | rename Info1  as "Host"
+            | rename Info2  as "Domain" 
+            | rename Info3  as "DNS Name" 
+            | rename Info6  as "RAM"
+            | rename Info7  as "Serial Number"
+            | rename Info8  as "CPU Cores"
+            | rename Info9  as "Sockets"
+            | rename Info13 as "OS Version"
+            | rename Info14 as "OS Installed"
+            | rename Info17 as "Last Boot"
+            | rename Info18 as "Domain Role"
+            | rename Info19 as "FQDN"
+            | rename Info20 as "Last Updated"
+            | table "Host", "Domain", "DNS Name", "FQDN", "Last Boot", "Last Updated", "OS Installed",  
+                    "RAM", "CPU Cores", "Sockets", "OS Version", "Domain Role"
+            | dedup "Host" 
+
+          </query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">40</option>
+        <option name="drilldown">cell</option>
+        <drilldown>
+          <link target="_blank">/app/search/dev_cyberark_host_details?TargetHost=$row.FQDN$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</dashboard>

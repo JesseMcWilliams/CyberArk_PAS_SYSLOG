@@ -1,0 +1,450 @@
+<form>
+  <init>
+    <set token="RefreshInterval">180s</set>
+    <set token="TargetIndex">"it-cyberark"</set>
+  </init>
+  <label>Dev CyberArk Vault</label>
+  <description>Dev CyberArk Vault Dashboard</description>
+  <fieldset submitButton="false">
+    <input type="dropdown" token="TargetHost" searchWhenChanged="true">
+      <label>Server</label>
+      <choice value="FQDN">ShortName</choice>
+      <choice value="FQDN">ShortName</choice>
+      <default>FQDN</default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Service Status ($TargetHost$)</title>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>PrivateArk Server Service Status</title>
+      <single>
+        <title>Host: Vault</title>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Info2="PrivateArk Server" Info3=* |  stats latest(Info4)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0xdc4e41","0x53a051"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>PrivateArk Database Service Status</title>
+      <single>
+        <title>Host: Vault</title>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Info2="PrivateArk Database" Info3=* |  stats latest(Info4)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0xdc4e41","0x53a051"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>CyberArk Logic Container</title>
+      <single>
+        <title>Host: Vault</title>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Info2="CyberArk Logic Container" Info3=* |  stats latest(Info4)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0xdc4e41","0x53a051"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Cyber-Ark Event Notification Engine</title>
+      <single>
+        <title>Host: Vault</title>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Info2="Cyber-Ark Event Notification Engine" Info3=* |  stats latest(Info4)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0xdc4e41","0x53a051"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>PrivateArk Remote Control Agent</title>
+      <single>
+        <title>Host: Vault</title>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Info2="PrivateArk Remote Control Agent" Info3=* |  stats latest(Info4)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0xdc4e41","0x53a051"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <single>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Info2="PrivateArk Server" Info3=* |  stats latest(Info3)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Info2="PrivateArk Database" Info3=* |  stats latest(Info3)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Info2="CyberArk Logic Container" Info3=* |  stats latest(Info3)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Info2="Cyber-Ark Event Notification Engine" Info3=* |  stats latest(Info3)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Info2="PrivateArk Remote Control Agent" Info3=*|  stats latest(Info3)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>VAULT Server Administrator Logon History (Last 30 Days)</title>
+      <table>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Product=LogonMonitor 
+| rename Info2 as Username 
+| rename Info3 as SID 
+| rename Info4 as LogonTime
+|  table Username SID LogonTime 
+| dedup LogonTime</query>
+          <earliest>-30d@d</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Hardware Performance Monitors</title>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>CPU Usage % (Last 4 Hours)</title>
+      <chart>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Product=VaultMonitor| timechart span=1m values(Info8)</query>
+          <earliest>-4@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">CPU Usage (%)</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Memory Usage % (Last 4 Hours)</title>
+      <chart>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Product=VaultMonitor| timechart span=1m values(Info9)</query>
+          <earliest>-4@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Memory Usage (%)</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Disk Space Utilization (Total vs. Free) (Last 4 Hours)</title>
+      <chart>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Product=VaultMonitor| timechart span=1m values(Info10) values(Info11)</query>
+          <earliest>-4@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">Storage Space (GB)</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="charting.seriesColors">[0x53A051,0x999999]</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>CPU Usage % (Current)</title>
+      <single>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Product=VaultMonitor | stats latest(Info8)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x53a051","0xf8be34","0xf1813f","0x006d9c","0xdc4e41"]</option>
+        <option name="rangeValues">[50,70,85,170]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="unit">%</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Memory Usage % (Current)</title>
+      <single>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Product=VaultMonitor | stats latest(Info9)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x53a051","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[50,70,85]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="unit">%</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Disk Space Free (GB) (Current)</title>
+      <single>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Product=VaultMonitor | stats latest(Info10)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="height">114</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0xdc4e41","0xf8be34","0x53a051"]</option>
+        <option name="rangeValues">[10,20]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="unit">GB</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>PrivateArk Server Application Performance Metrics</title>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Average and Max Execution Time (Last 4 Hours)</title>
+      <chart>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Product=VaultMonitor| timechart span=1m values(Info1) values(Info2)</query>
+          <earliest>-4@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Execution Time (ms)</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Average and Max Queue Time (Last 4 Hours)</title>
+      <chart>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Product=VaultMonitor| timechart span=1m values(Info3) values(Info4)</query>
+          <earliest>-4@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Queue Time</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Current and Max Parallel Tasks (Last 4 Hours)</title>
+      <chart>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Product=VaultMonitor| timechart span=1m values(Info5) values(Info6)</query>
+          <earliest>-4@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">Parallel Tasks</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Transaction Count (Last 4 Hours)</title>
+      <chart>
+        <search>
+          <query>index=$TargetIndex$ host=$TargetHost$ Product=VaultMonitor| timechart span=1m values(Info7)</query>
+          <earliest>-4@h</earliest>
+          <latest>now</latest>
+          <refresh>$RefreshInterval$</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Transaction Count</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>

@@ -1,0 +1,332 @@
+<dashboard>
+  <init>
+    <set token="RefreshInterval">180s</set>
+    <set token="TargetIndex">"it-cyberark"</set>
+    <set token="TargetSource">"cyberark:epv:cef"</set>
+    <set token="LineColor">#000000</set>
+    <set token="LineHeight">10px</set>
+  </init>
+  <label>CyberArk Host Details</label>
+  <description>CyberArk Host Details for specific host</description>
+  <row>
+    <panel>
+      <title>System OS Information for $TargetHost$</title>
+      <table>
+        <search>
+          <query>
+            index=$TargetIndex$ host=$TargetHost$ Product="HostMonitor"
+            | rename Info1  as "Host"
+            | rename Info2  as "Domain" 
+            | rename Info3  as "DNS Name" 
+            | rename Info4  as "Manufacturer" 
+            | rename Info5  as "Model"
+            | rename Info6  as "RAM"
+            | rename Info7  as "Serial Number"
+            | rename Info8  as "CPU Cores"
+            | rename Info9  as "Sockets"
+            | rename Info10 as "CPU Name"
+            | rename Info11 as "CPU Desc"
+            | rename Info12 as "OS Root"
+            | rename Info13 as "OS Version"
+            | rename Info14 as "OS Installed"
+            | rename Info15 as "Local Time"
+            | rename Info16 as "Time Zone"
+            | rename Info17 as "Last Boot"
+            | rename Info18 as "Domain Role"
+            | rename Info19 as "FQDN"
+            | rename Info20 as "Last Updated"
+            | table "Host", "Domain", "DNS Name", "FQDN", "OS Version", "Local Time", "Time Zone", "OS Installed", "Last Boot", "Last Updated", "RAM", "CPU Cores",
+                    "Sockets", "Domain Role", "Manufacturer", "Model", "RAM", "Sockets", "CPU Cores", "CPU Name", "CPU Desc", "OS Root", "Serial Number"
+            | dedup "Host" 
+            | transpose 
+            | rename column as Label | rename "row 1" as Value
+          </query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">40</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <style>
+          hr {
+            width: 90%;
+            height: $LineHeight$;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: $LineColor$;
+            border: 0 none;
+          }
+        </style>
+        <hr/>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>System Network Information for $TargetHost$</title>
+      <table>
+        <search>
+          <query>
+            index=$TargetIndex$ host=$TargetHost$ Product="NetworkMonitor"
+            |rename Info1 as "Host"
+            |rename Info2 as "DeviceID"
+            |rename Info3 as "Index"
+            |rename Info4 as "GUID"
+            |rename Info5 as "Caption"
+            |rename Info6 as "Description"
+            |rename Info7 as "AdapterType"
+            |rename Info8 as "MAC"
+            |rename Info9 as "LastReset"
+            |rename Info10 as "Speed" | eval Speed=Speed/1000000
+            |rename Info11 as "IPDetails" | eval IPDetails=split(IPDetails, ";")
+            |table Host,DeviceID,Index,GUID,Caption,Description,AdapterType,MAC,LastReset,Speed,IPDetails
+            |dedup DeviceID
+            
+          </query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">40</option>
+        <option name="drilldown">none</option>
+        <format type="number" field="Speed">
+          <option name="precision">0</option>
+          <option name="unit">Mb</option>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <style>
+          hr {
+            width: 90%;
+            height: $LineHeight$;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: $LineColor$;
+            border: 0 none;
+          }
+        </style>
+        <hr/>
+      </html>
+    </panel>
+  </row>
+<row>
+    <panel>
+      <title>System Drive Information for $TargetHost$</title>
+      <table>
+        <search>
+          <query>
+            index=$TargetIndex$ host=$TargetHost$ Product="DriveMonitor"
+            |rename Info1 as "Host"
+            |rename Info2 as "DeviceID"
+            |rename Info3 as "Name"
+            |rename Info4 as "Caption"
+            |rename Info5 as "Description"
+            |rename Info6 as "Interface"
+            |rename Info7 as "Size" | eval Size=Size/1000000000
+            |rename Info8 as "PartitionCount"
+            |rename Info9 as "Partitions" | eval Partitions=split(Partitions, ";")
+            |table Host,DeviceID, Name, Caption, Description, Interface, Size, PartitionCount, Partitions
+            |dedup DeviceID
+            
+          </query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">40</option>
+        <option name="drilldown">none</option>
+        <format type="number" field="Size">
+          <option name="unit">GB</option>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <style>
+          hr {
+            width: 90%;
+            height: $LineHeight$;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: $LineColor$;
+            border: 0 none;
+          }
+        </style>
+        <hr/>
+      </html>
+    </panel>
+  </row>
+<row>
+    <panel>
+      <title>System User Information for $TargetHost$</title>
+      <table>
+        <search>
+          <query>
+            index=$TargetIndex$ host=$TargetHost$ Product="UserMonitor"
+            |rename Info1 as "Host"
+            |rename Info2 as "SID"
+            |rename Info3 as "Name"
+            |rename Info4 as "Caption"
+            |rename Info5 as "Domain"
+            |rename Info6 as "Description"
+            |rename Info7 as "Disabled"
+            |rename Info8 as "Locked"
+            |rename Info9 as "PasswordChanged"
+            |table Host,SID, Name, Caption, Description, Domain, Disabled, Locked, PasswordChanged
+            |dedup SID
+            
+          </query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">40</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <style>
+          hr {
+            width: 90%;
+            height: $LineHeight$;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: $LineColor$;
+            border: 0 none;
+          }
+        </style>
+        <hr/>
+      </html>
+    </panel>
+  </row>
+<row>
+    <panel>
+      <title>System Group Information for $TargetHost$</title>
+      <table>
+        <search>
+          <query>
+            index=$TargetIndex$ host=$TargetHost$ Product="GroupMonitor"
+            |rename Info1  as "Host"
+            |rename Info2  as "SID" 
+            |rename Info3  as "Name" 
+            |rename Info4  as "Caption" 
+            |rename Info5  as "Domain" 
+            |rename Info6  as "Description" 
+            |rename Info7  as "Members" | eval Members=split(Members,";")
+            |table Host, SID, Name, Caption, Domain, Description, Members
+            |dedup SID
+            
+          </query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">40</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <style>
+          hr {
+            width: 90%;
+            height: $LineHeight$;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: $LineColor$;
+            border: 0 none;
+          }
+        </style>
+        <hr/>
+      </html>
+    </panel>
+  </row>
+<row>
+    <panel>
+      <title>System Software Information for $TargetHost$</title>
+      <table>
+        <search>
+          <query>
+            index=$TargetIndex$ host=$TargetHost$ Product="SoftwareMonitor"
+            |rename Info1  as "Host"
+            |rename Info2  as "Publisher"
+            |rename Info3  as "Name"
+            |rename Info4  as "Version"
+            |rename Info5  as "Installed" | eval InstallDate=substr(Installed, 1, 4)."/".substr(Installed, 5, 2)."/".substr(Installed, 7, 2)
+            |rename Info6  as "InstallPath"
+            |table Host, Publisher, Name, Version, InstallDate, InstallDate, InstallPath
+            |dedup Name
+          </query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">40</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <style>
+          hr {
+            width: 90%;
+            height: $LineHeight$;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: $LineColor$;
+            border: 0 none;
+          }
+        </style>
+        <hr/>
+      </html>
+    </panel>
+  </row>
+<row>
+    <panel>
+      <title>System Firewall Information for $TargetHost$</title>
+      <table>
+        <search>
+          <query>
+            index=$TargetIndex$ host=$TargetHost$ Product="FirewallMonitor"
+            |rename Info1  as "Host"
+            |rename Info2  as "ID" 
+            |rename Info3  as "Name" 
+            |rename Info4  as "Group" 
+            |rename Info5  as "Enabled" 
+            |rename Info6  as "Profile" 
+            |rename Info7  as "Direction" 
+            |rename Info8  as "Action" 
+            |rename Info9  as "Caption" 
+            |rename Info10 as "Description" 
+            |rename Info11 as "DisplayGroup" 
+            |rename Info12 as "RuleGroup" 
+            |table Host, ID, Name, Group, Enabled, Profile, Direction, Action, Caption, Description, DisplayGroup, RuleGroup
+            |dedup ID
+          </query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">40</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>
